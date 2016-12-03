@@ -117,14 +117,18 @@ int _tmain(int argc, _TCHAR* argv[])
 				int count_str = 0;
 	
 				while(!feof(file)){
-					fgets(buffer, Numb_Elem_File, file);
-					MagStr(buffer);
-					Bias(buffer, count_str, &x, &y);
-					count_str++;
+
+					if(fgets(buffer, Numb_Elem_File, file) != NULL){
+						MagStr(buffer);
+						Bias(buffer, count_str, &x, &y);
+						count_str++;
+					} else {
+						printf("Доступ к файлу прервался");
+						free(buffer);
+						return 0;
+					}
 				}
-
 				printf("Финальная координата = %d, %d \n", x, y);
-
 				free(buffer);
 			} else {
 				printf("Файл %s имеет слишком большой размер. Недостаточно памяти\n", argv[1]);
